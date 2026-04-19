@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { Link } from 'react-router';
 
 export function Footer() {
   return (
@@ -12,19 +13,19 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="/products" className="hover:text-white transition-colors">All Products</a></li>
-              <li><a href="/products" className="hover:text-white transition-colors">Clear Cases</a></li>
-              <li><a href="/products" className="hover:text-white transition-colors">Leather Cases</a></li>
-              <li><a href="/products" className="hover:text-white transition-colors">Silicone Cases</a></li>
+              <li><Link to="/products" className="hover:text-white transition-colors">All Products</Link></li>
+              <li><Link to="/products" className="hover:text-white transition-colors">Anime</Link></li>
+              <li><Link to="/products" className="hover:text-white transition-colors">TV Show</Link></li>
+              <li><Link to="/products" className="hover:text-white transition-colors">Islam</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Shipping Info</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Returns</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Shipping Info</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Returns</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
           <div>
@@ -33,6 +34,10 @@ export function Footer() {
               <a href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook className="w-5 h-5" /></a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
+            </div>
+            <div className="mt-4 space-y-1 text-sm text-gray-400">
+              <p>📞 01030733667</p>
+              <p>✉️ esamalzaro2@gmail.com</p>
             </div>
           </div>
         </div>

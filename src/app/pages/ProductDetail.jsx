@@ -4,7 +4,7 @@ import { products, iphoneModels } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { ArrowLeft, ShoppingCart, Smartphone, Check, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { emptyForm, validateForm, sendOrder, getDeliveryFee, genConfNum } from '../utils/checkout';
+import { emptyForm, validateForm, sendOrder, genConfNum } from '../utils/checkout';
 import { CheckoutForm } from '../components/CheckoutForm';
 import { Invoice } from '../components/Invoice';
 
@@ -17,7 +17,7 @@ export function ProductDetail() {
 
   const [selectedModel, setSelectedModel] = useState('');
   const [modelError, setModelError]       = useState(false);
-  const [step, setStep]                   = useState('detail'); // detail | checkout | confirmed
+  const [step, setStep]                   = useState('detail');
   const [sending, setSending]             = useState(false);
   const [form, setForm]                   = useState(emptyForm);
   const [errors, setErrors]               = useState({});
@@ -34,17 +34,31 @@ export function ProductDetail() {
     );
   }
 
+  const isModelSoldOut = (model) => {
+    if (product.soldOut) return true;
+    return product.soldOutModels?.includes(model) ?? false;
+  };
+
+  const selectedModelSoldOut = selectedModel ? isModelSoldOut(selectedModel) : false;
+
+  const isFullySoldOut = product.soldOut ||
+    (product.soldOutModels?.length === iphoneModels.length);
+
   const handleChangeField = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
   };
 
-  const handleAddToCart = () => {
+  const handleOrder = () => {
     if (!selectedModel) { setModelError(true); return; }
     setModelError(false);
-    addToCart(product, selectedModel);
-    toast.success('Added to cart!', { description: `${product.name} — ${selectedModel}` });
-    setStep('checkout');
+    if (selectedModelSoldOut) {
+      handlePreOrder();
+    } else {
+      addToCart(product, selectedModel);
+      toast.success('Added to cart!', { description: `${product.name} — ${selectedModel}` });
+      setStep('checkout');
+    }
   };
 
   const handlePreOrder = () => {
@@ -69,24 +83,13 @@ export function ProductDetail() {
     const items = [{ ...product, selectedColor: selectedModel, quantity: 1 }];
     const { fee, total } = await sendOrder({ form, items, totalPrice: product.price, confNum });
 
-    setOrderData({
-      ...form,
-      items,
-      totalPrice: product.price,
-      deliveryFee: fee,
-      grandTotal: total,
-      confNum,
-    });
+    setOrderData({ ...form, items, totalPrice: product.price, deliveryFee: fee, grandTotal: total, confNum });
     setSending(false);
     setStep('confirmed');
   };
 
-  // ── Confirmed ──
-  if (step === 'confirmed' && orderData) {
-    return <Invoice orderData={orderData} />;
-  }
+  if (step === 'confirmed' && orderData) return <Invoice orderData={orderData} />;
 
-  // ── Checkout form ──
   if (step === 'checkout') {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -94,8 +97,6 @@ export function ProductDetail() {
           <button onClick={() => setStep('detail')} className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors">
             <ArrowLeft className="w-5 h-5" /> Back to Product
           </button>
-
-          {/* Order recap */}
           <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4 flex gap-4 items-center">
             <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
               <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
@@ -106,12 +107,9 @@ export function ProductDetail() {
             </div>
             <p className="font-bold text-blue-600">250 EGP</p>
           </div>
-
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <CheckoutForm
-              form={form}
-              errors={errors}
-              sending={sending}
+              form={form} errors={errors} sending={sending}
               totalPrice={product.price}
               onChangeField={handleChangeField}
               onConfirm={handleConfirm}
@@ -123,7 +121,6 @@ export function ProductDetail() {
     );
   }
 
-  // ── Product detail ──
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -137,8 +134,8 @@ export function ProductDetail() {
             {/* Image */}
             <div className="aspect-square bg-gray-100 relative">
               <img src={product.image} alt={product.name}
-                className={`w-full h-full object-cover ${product.soldOut ? 'grayscale' : ''}`} />
-              {product.soldOut && (
+                className={`w-full h-full object-cover ${isFullySoldOut ? 'grayscale' : ''}`} />
+              {isFullySoldOut && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                   <div className="text-center">
                     <span className="block bg-red-600 text-white text-xl font-bold px-6 py-2 rounded-full mb-3">Sold Out</span>
@@ -150,9 +147,12 @@ export function ProductDetail() {
 
             {/* Details */}
             <div className="flex flex-col p-8">
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">{product.category}</span>
-                {product.soldOut && <span className="text-sm font-bold text-red-600 bg-red-50 px-3 py-1 rounded-full">Sold Out</span>}
+                {isFullySoldOut && <span className="text-sm font-bold text-red-600 bg-red-50 px-3 py-1 rounded-full">Sold Out</span>}
+                {!isFullySoldOut && product.soldOutModels?.length > 0 && (
+                  <span className="text-sm font-semibold text-orange-600 bg-orange-50 px-3 py-1 rounded-full">بعض الموبيلات خلصت</span>
+                )}
               </div>
 
               <h1 className="text-3xl font-bold text-gray-900 mb-3">{product.name}</h1>
@@ -164,73 +164,85 @@ export function ProductDetail() {
                 <p className="font-semibold text-gray-900">{product.material}</p>
               </div>
 
-              {/* iPhone model selector */}
+              {/* iPhone model selector — صف واحد */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
                   <Smartphone className="w-5 h-5 text-gray-700" />
                   <label className="font-semibold text-gray-900">Select Your iPhone Model *</label>
                 </div>
                 {modelError && <p className="text-red-500 text-sm mb-2">⚠️ Please select your iPhone model first</p>}
-                <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
-                  {iphoneModels.map(model => (
-                    <button key={model}
-                      onClick={() => { setSelectedModel(model); setModelError(false); }}
-                      className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all text-left ${
-                        selectedModel === model
-                          ? 'border-blue-600 bg-blue-50 text-blue-700'
-                          : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
+
+                {/* صف واحد قابل للسكرول */}
+                <div className="flex flex-col gap-2 max-h-72 overflow-y-auto pr-1">
+                  {iphoneModels.map(model => {
+                    const soldOut = isModelSoldOut(model);
+                    const isSelected = selectedModel === model;
+                    return (
+                      <button
+                        key={model}
+                        onClick={() => { setSelectedModel(model); setModelError(false); }}
+                        className={`w-full px-4 py-2.5 rounded-lg border text-sm font-medium transition-all text-left flex items-center justify-between ${
+                          isSelected
+                            ? soldOut
+                              ? 'border-orange-500 bg-orange-50 text-orange-700'
+                              : 'border-blue-600 bg-blue-50 text-blue-700'
+                            : soldOut
+                              ? 'border-red-200 bg-red-50 text-red-500'
+                              : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
+                        }`}
+                      >
                         <span>{model}</span>
-                        {selectedModel === model && <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />}
-                      </div>
-                    </button>
-                  ))}
+                        <span className="flex items-center gap-1">
+                          {isSelected && !soldOut && <Check className="w-4 h-4 text-blue-600" />}
+                          {soldOut && (
+                            <span className="text-xs bg-red-100 text-red-500 px-2 py-0.5 rounded-full">Sold Out</span>
+                          )}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
-                {selectedModel && <p className="mt-2 text-sm text-green-600 font-medium">✓ Selected: {selectedModel}</p>}
+
+                {selectedModel && (
+                  <p className={`mt-2 text-sm font-medium ${selectedModelSoldOut ? 'text-orange-600' : 'text-green-600'}`}>
+                    {selectedModelSoldOut
+                      ? `⚠️ ${selectedModel} — خلص، هتتبعت على واتساب للـ Pre-Order`
+                      : `✓ Selected: ${selectedModel}`
+                    }
+                  </p>
+                )}
               </div>
 
-              {/* Buttons */}
-              {product.soldOut ? (
-                <div className="mt-auto flex flex-col gap-3">
-                  <button disabled className="flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg bg-gray-200 text-gray-400 cursor-not-allowed">
-                    <ShoppingCart className="w-5 h-5" /> Sold Out
+              {/* Action button */}
+              {selectedModel ? (
+                selectedModelSoldOut ? (
+                  <div className="mt-auto flex flex-col gap-3">
+                    <button onClick={handlePreOrder}
+                      className="flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg bg-green-500 text-white hover:bg-green-600 transition-colors">
+                      <MessageCircle className="w-5 h-5" />
+                      Pre-Order via WhatsApp — {selectedModel}
+                    </button>
+                    <p className="text-center text-sm text-gray-500">
+                      {selectedModel} خلص، بس ممكن تعمل Pre-Order وتاخده أول ما يجي
+                    </p>
+                  </div>
+                ) : (
+                  <button onClick={handleOrder}
+                    className="mt-auto flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                    <ShoppingCart className="w-5 h-5" />
+                    Order Now — {selectedModel}
                   </button>
-                  <button onClick={handlePreOrder} className="flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg bg-green-500 text-white hover:bg-green-600 transition-colors">
-                    <MessageCircle className="w-5 h-5" /> Pre-Order via WhatsApp
-                  </button>
-                  <p className="text-center text-sm text-gray-500">This item is out of stock. Contact us to reserve yours!</p>
-                </div>
+                )
               ) : (
-                <button onClick={handleAddToCart}
-                  className={`mt-auto flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg transition-colors ${
-                    selectedModel ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  {selectedModel ? 'Order Now' : 'Select iPhone Model First'}
+                <button disabled
+                  className="mt-auto flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg bg-gray-200 text-gray-500 cursor-not-allowed">
+                  <Smartphone className="w-5 h-5" />
+                  Select iPhone Model First
                 </button>
               )}
             </div>
           </div>
-
-          {/* Info cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8 border-t border-gray-100">
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-gray-900 mb-1">Delivery Fees</h3>
-              <p className="text-gray-500 text-sm">القاهرة / الجيزة: 70 EGP</p>
-              <p className="text-gray-500 text-sm">باقي المحافظات: 105 EGP</p>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-gray-900 mb-1">30-Day Returns</h3>
-              <p className="text-gray-500 text-sm">Not satisfied? Return within 30 days for a full refund.</p>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-gray-900 mb-1">Quality Guarantee</h3>
-              <p className="text-gray-500 text-sm">All cases come with a 1-year warranty against defects.</p>
-            </div>
-          </div>
+          {/* الكارت الي تحت اتشال */}
         </div>
       </div>
     </div>

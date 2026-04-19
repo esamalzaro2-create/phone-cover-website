@@ -28,8 +28,27 @@ import img7 from '../../../assets/7.jpeg';
 import img8 from '../../../assets/8.jpeg';
 import img9 from '../../../assets/9.jpeg';
 import img10 from '../../../assets/10.jpeg';
+import img11 from '../../../assets/11.jpeg';
+import img12 from '../../../assets/12.jpeg';
+import img13 from '../../../assets/13.jpeg';
+import img14 from '../../../assets/14.jpeg';
+import img15 from '../../../assets/15.jpeg';
+import img16 from '../../../assets/16.jpeg';
+import img17 from '../../../assets/17.jpeg';
+
 
 export const categories = ['All', 'Anime', 'TV Show', 'Cartoon', 'Funny', 'Islam'];
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// soldOut: false        ← المنتج كله متاح لكل الموبيلات
+// soldOut: true         ← المنتج كله خلص (Pre-Order للكل)
+// soldOutModels: [...]  ← موبيلات معينة خلصت بس
+//
+// مثال:
+// soldOut: false,
+// soldOutModels: ['iPhone 13', 'iPhone 14 Pro']
+// ← يعني 13 و 14 Pro خلصوا بس الباقي متاح
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 export const products = [
   {
@@ -40,7 +59,8 @@ export const products = [
     category: 'Cartoon',
     description: 'Unique cartoon design with bold artwork. Premium quality print that lasts.',
     material: 'Hard Polycarbonate',
-    soldOut: true,
+    soldOut: false,
+    soldOutModels: ['iPhone 13', 'iPhone 14 Pro', 'iPhone 15 Pro Max'],
   },
   {
     id: '2',
@@ -50,7 +70,8 @@ export const products = [
     category: 'Cartoon',
     description: 'Beautiful celestial sun and moon design with vibrant colors.',
     material: 'Hard Polycarbonate',
-    soldOut: true,
+    soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '3',
@@ -61,6 +82,7 @@ export const products = [
     description: 'Stunning Makkah night view design. A perfect gift for Muslims.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '4',
@@ -71,6 +93,7 @@ export const products = [
     description: 'Aesthetic vintage radio and coffee design. Perfect for retro lovers.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '5',
@@ -81,6 +104,7 @@ export const products = [
     description: 'Porsche 911 GT3 RS Grand Tourismo design for car enthusiasts.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '6',
@@ -91,6 +115,7 @@ export const products = [
     description: 'Beautiful Arabic calligraphy — لا تحزن إن الله معنا.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '7',
@@ -101,6 +126,7 @@ export const products = [
     description: 'Jujutsu Kaisen manga collage design for anime fans.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '8',
@@ -111,6 +137,7 @@ export const products = [
     description: 'Bold black and white anime manga artwork design.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '9',
@@ -121,6 +148,7 @@ export const products = [
     description: "Funny angry face with Don't Touch My Phone text. Great for laughs!",
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '10',
@@ -131,75 +159,83 @@ export const products = [
     description: 'Attack on Titan Colossal Titan close-up manga art design.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '11',
     name: 'Astronaut Case',
     price: 250,
-    image: '/assets/11.jpeg',
+    image: img11,
     category: 'Cartoon',
     description: 'Cute lonely astronaut sitting under the stars. Aesthetic and minimal.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '12',
     name: 'JJK White Case',
     price: 250,
-    image: '/assets/12.jpeg',
+    image: img12,
     category: 'Anime',
     description: 'Jujutsu Kaisen character art on clean white background.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '13',
     name: 'Gojo Satoru Case',
     price: 250,
-    image: '/assets/13.jpeg',
+    image: img13,
     category: 'Anime',
     description: 'Gojo Satoru iconic pose on sleek black case.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '14',
     name: 'One Piece Jolly Roger',
     price: 250,
-    image: '/assets/14.jpeg',
+    image: img14,
     category: 'Anime',
     description: 'One Piece Wanted poster collage with the iconic Skull logo.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '15',
     name: 'Luffy Wanted Case',
     price: 250,
-    image: '/assets/15.jpeg',
+    image: img15,
     category: 'Anime',
     description: 'Monkey D. Luffy Wanted poster colorful collage design.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '16',
     name: 'One Piece Luffy Case',
     price: 250,
-    image: '/assets/16.jpeg',
+    image: img16,
     category: 'Anime',
     description: 'Luffy action pose with One Piece logo on dark frosted case.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
   {
     id: '17',
     name: 'House of Stark Case',
     price: 250,
-    image: '/assets/17.jpeg',
+    image: img17,
     category: 'TV Show',
     description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
     material: 'Hard Polycarbonate',
     soldOut: false,
+    soldOutModels: [],
   },
 ];
