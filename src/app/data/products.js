@@ -18,6 +18,16 @@ export const iphoneModels = [
   'iPhone 17 Pro',
   'iPhone 17 Pro Max',
 ];
+import img1 from '../../../assets/1.jpeg';
+import img2 from '../../../assets/2.jpeg';
+import img3 from '../../../assets/3.jpeg';
+import img4 from '../../../assets/4.jpeg';
+import img5 from '../../../assets/5.jpeg';
+import img6 from '../../../assets/6.jpeg';
+import img7 from '../../../assets/7.jpeg';
+import img8 from '../../../assets/8.jpeg';
+import img9 from '../../../assets/9.jpeg';
+import img10 from '../../../assets/10.jpeg';
 
 export const categories = ['All', 'Anime', 'TV Show', 'Cartoon', 'Funny', 'Islam'];
 
@@ -26,7 +36,7 @@ export const products = [
     id: '1',
     name: 'Good Person Case',
     price: 250,
-    image: '/assets/1.jpeg',
+    image: img1,
     category: 'Cartoon',
     description: 'Unique cartoon design with bold artwork. Premium quality print that lasts.',
     material: 'Hard Polycarbonate',
@@ -36,7 +46,7 @@ export const products = [
     id: '2',
     name: 'Sun & Moon Case',
     price: 250,
-    image: '/assets/2.jpeg',
+    image: img2,
     category: 'Cartoon',
     description: 'Beautiful celestial sun and moon design with vibrant colors.',
     material: 'Hard Polycarbonate',
@@ -46,7 +56,7 @@ export const products = [
     id: '3',
     name: 'Makkah Case',
     price: 250,
-    image: '/assets/3.jpeg',
+    image: img3,
     category: 'Islam',
     description: 'Stunning Makkah night view design. A perfect gift for Muslims.',
     material: 'Hard Polycarbonate',
@@ -56,7 +66,7 @@ export const products = [
     id: '4',
     name: 'Vintage Radio Case',
     price: 250,
-    image: '/assets/4.jpeg',
+    image: img4,
     category: 'Cartoon',
     description: 'Aesthetic vintage radio and coffee design. Perfect for retro lovers.',
     material: 'Hard Polycarbonate',
@@ -66,7 +76,7 @@ export const products = [
     id: '5',
     name: 'Porsche GT3 Case',
     price: 250,
-    image: '/assets/5.jpeg',
+    image: img5,
     category: 'Funny',
     description: 'Porsche 911 GT3 RS Grand Tourismo design for car enthusiasts.',
     material: 'Hard Polycarbonate',
@@ -76,7 +86,7 @@ export const products = [
     id: '6',
     name: 'Islamic Quote Case',
     price: 250,
-    image: '/assets/6.jpeg',
+    image: img6,
     category: 'Islam',
     description: 'Beautiful Arabic calligraphy — لا تحزن إن الله معنا.',
     material: 'Hard Polycarbonate',
@@ -86,7 +96,7 @@ export const products = [
     id: '7',
     name: 'Jujutsu Kaisen Case',
     price: 250,
-    image: '/assets/7.jpeg',
+    image: img7,
     category: 'Anime',
     description: 'Jujutsu Kaisen manga collage design for anime fans.',
     material: 'Hard Polycarbonate',
@@ -96,7 +106,7 @@ export const products = [
     id: '8',
     name: 'Anime Manga Case',
     price: 250,
-    image: '/assets/8.jpeg',
+    image: img8,
     category: 'Anime',
     description: 'Bold black and white anime manga artwork design.',
     material: 'Hard Polycarbonate',
@@ -106,7 +116,7 @@ export const products = [
     id: '9',
     name: "Don't Touch My Phone",
     price: 250,
-    image: '/assets/9.jpeg',
+    image: img9,
     category: 'Funny',
     description: "Funny angry face with Don't Touch My Phone text. Great for laughs!",
     material: 'Hard Polycarbonate',
@@ -116,7 +126,7 @@ export const products = [
     id: '10',
     name: 'Attack on Titan Case',
     price: 250,
-    image: '/assets/10.jpeg',
+    image: img10,
     category: 'Anime',
     description: 'Attack on Titan Colossal Titan close-up manga art design.',
     material: 'Hard Polycarbonate',
