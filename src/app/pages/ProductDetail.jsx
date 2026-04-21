@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router';
 import { products, iphoneModels } from '../data/products';
 import { useCart } from '../context/CartContext';
-import { ArrowLeft, ShoppingCart, Smartphone, Check, MessageCircle } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Smartphone, Check, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { emptyForm, validateForm, sendOrder, genConfNum } from '../utils/checkout';
 import { CheckoutForm } from '../components/CheckoutForm';
@@ -23,6 +23,8 @@ export function ProductDetail() {
   const [errors, setErrors]               = useState({});
   const [orderData, setOrderData]         = useState(null);
 
+  const sliderRef = useRef(null);
+
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -34,15 +36,22 @@ export function ProductDetail() {
     );
   }
 
+  // المنتجات من نفس الكاتيجوري غير المنتج الحالي
+  const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id);
+
+  const scrollSlider = (dir) => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: dir * 280, behavior: 'smooth' });
+    }
+  };
+
   const isModelSoldOut = (model) => {
     if (product.soldOut) return true;
     return product.soldOutModels?.includes(model) ?? false;
   };
 
   const selectedModelSoldOut = selectedModel ? isModelSoldOut(selectedModel) : false;
-
-  const isFullySoldOut = product.soldOut ||
-    (product.soldOutModels?.length === iphoneModels.length);
+  const isFullySoldOut = product.soldOut || (product.soldOutModels?.length === iphoneModels.length);
 
   const handleChangeField = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -164,7 +173,7 @@ export function ProductDetail() {
                 <p className="font-semibold text-gray-900">{product.material}</p>
               </div>
 
-              {/* iPhone model selector — صف واحد */}
+              {/* iPhone model selector */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
                   <Smartphone className="w-5 h-5 text-gray-700" />
@@ -172,31 +181,23 @@ export function ProductDetail() {
                 </div>
                 {modelError && <p className="text-red-500 text-sm mb-2">⚠️ Please select your iPhone model first</p>}
 
-                {/* صف واحد قابل للسكرول */}
                 <div className="flex flex-col gap-2 max-h-72 overflow-y-auto pr-1">
                   {iphoneModels.map(model => {
                     const soldOut = isModelSoldOut(model);
                     const isSelected = selectedModel === model;
                     return (
-                      <button
-                        key={model}
+                      <button key={model}
                         onClick={() => { setSelectedModel(model); setModelError(false); }}
                         className={`w-full px-4 py-2.5 rounded-lg border text-sm font-medium transition-all text-left flex items-center justify-between ${
                           isSelected
-                            ? soldOut
-                              ? 'border-orange-500 bg-orange-50 text-orange-700'
-                              : 'border-blue-600 bg-blue-50 text-blue-700'
-                            : soldOut
-                              ? 'border-red-200 bg-red-50 text-red-500'
-                              : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
+                            ? soldOut ? 'border-orange-500 bg-orange-50 text-orange-700' : 'border-blue-600 bg-blue-50 text-blue-700'
+                            : soldOut ? 'border-red-200 bg-red-50 text-red-500' : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
                         }`}
                       >
                         <span>{model}</span>
                         <span className="flex items-center gap-1">
                           {isSelected && !soldOut && <Check className="w-4 h-4 text-blue-600" />}
-                          {soldOut && (
-                            <span className="text-xs bg-red-100 text-red-500 px-2 py-0.5 rounded-full">Sold Out</span>
-                          )}
+                          {soldOut && <span className="text-xs bg-red-100 text-red-500 px-2 py-0.5 rounded-full">Sold Out</span>}
                         </span>
                       </button>
                     );
@@ -207,8 +208,7 @@ export function ProductDetail() {
                   <p className={`mt-2 text-sm font-medium ${selectedModelSoldOut ? 'text-orange-600' : 'text-green-600'}`}>
                     {selectedModelSoldOut
                       ? `⚠️ ${selectedModel} — خلص، هتتبعت على واتساب للـ Pre-Order`
-                      : `✓ Selected: ${selectedModel}`
-                    }
+                      : `✓ Selected: ${selectedModel}`}
                   </p>
                 )}
               </div>
@@ -222,9 +222,7 @@ export function ProductDetail() {
                       <MessageCircle className="w-5 h-5" />
                       Pre-Order via WhatsApp — {selectedModel}
                     </button>
-                    <p className="text-center text-sm text-gray-500">
-                      {selectedModel} خلص، بس ممكن تعمل Pre-Order وتاخده أول ما يجي
-                    </p>
+                    <p className="text-center text-sm text-gray-500">{selectedModel} خلص، بس ممكن تعمل Pre-Order وتاخده أول ما يجي</p>
                   </div>
                 ) : (
                   <button onClick={handleOrder}
@@ -242,8 +240,74 @@ export function ProductDetail() {
               )}
             </div>
           </div>
-          {/* الكارت الي تحت اتشال */}
         </div>
+
+        {/* ── Related Products ── */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-12">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">More from {product.category}</h2>
+                <p className="text-gray-500 text-sm mt-1">منتجات مشابهة ممكن تعجبك</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => scrollSlider(-1)}
+                  className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-600" />
+                </button>
+                <button
+                  onClick={() => scrollSlider(1)}
+                  className="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm"
+                >
+                  <ChevronLeft className="w-5 h-5 text-gray-600" />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable slider */}
+            <div
+              ref={sliderRef}
+              className="flex gap-4 overflow-x-auto pb-4"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {relatedProducts.map(related => (
+                <Link
+                  key={related.id}
+                  to={`/product/${related.id}`}
+                  onClick={() => { setSelectedModel(''); setStep('detail'); window.scrollTo(0, 0); }}
+                  className="flex-shrink-0 w-56 bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
+                >
+                  <div className="w-full h-48 bg-gray-100 overflow-hidden relative">
+                    <img
+                      src={related.image}
+                      alt={related.name}
+                      className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${related.soldOut ? 'grayscale' : ''}`}
+                    />
+                    {related.soldOut && (
+                      <span className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                        Sold Out
+                      </span>
+                    )}
+                    {!related.soldOut && related.soldOutModels?.length > 0 && (
+                      <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                        Limited
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <p className="font-semibold text-gray-900 text-sm mb-1 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                      {related.name}
+                    </p>
+                    <p className="text-blue-600 font-bold text-sm">250 EGP</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

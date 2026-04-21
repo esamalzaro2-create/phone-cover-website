@@ -1,10 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 import { ProductCard } from '../components/ProductCard';
 import { products, categories } from '../data/products';
-import { Filter } from 'lucide-react';
+import { Filter, Palette, Sparkles } from 'lucide-react';
 
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [shake, setShake] = useState(false);
+
+  // بيتهز كل 3 ثواني لو مش محطوط عليه الماوس
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShake(true);
+      setTimeout(() => setShake(false), 600);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const filteredProducts = products.filter(product =>
     selectedCategory === 'All' || product.category === selectedCategory
@@ -26,7 +37,9 @@ export function Products() {
                 <Filter className="w-4 h-4 text-gray-600" />
                 <h2 className="font-semibold text-gray-900">Category</h2>
               </div>
-              <div className="space-y-2">
+
+              {/* Category buttons */}
+              <div className="space-y-2 mb-6">
                 {categories.map(category => (
                   <button
                     key={category}
@@ -43,6 +56,39 @@ export function Products() {
                     </span>
                   </button>
                 ))}
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-gray-100 pt-4">
+                {/* Custom Design button */}
+                {/* <Link
+                  to="/custom-design"
+                  onMouseEnter={() => setShake(false)}
+                  style={{
+                    animation: shake ? 'wiggle 0.6s ease-in-out' : 'none',
+                  }}
+                  className="flex items-center gap-2 w-full px-3 py-3 rounded-xl text-sm font-bold text-white transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    animation: shake ? 'wiggle 0.6s ease-in-out' : 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    width: '100%',
+                    padding: '12px',
+                    borderRadius: '12px',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    color: 'white',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <Palette className="w-4 h-4 flex-shrink-0" />
+                  <span>Custom Design</span>
+                  <Sparkles className="w-3 h-3 mr-auto opacity-80" />
+                </Link> */}
+                <p className="text-xs text-gray-400 text-center "></p>
               </div>
             </div>
           </aside>
@@ -66,6 +112,20 @@ export function Products() {
           </main>
         </div>
       </div>
+
+      {/* Wiggle animation */}
+      <style>{`
+        @keyframes wiggle {
+          0%   { transform: rotate(0deg); }
+          15%  { transform: rotate(-6deg); }
+          30%  { transform: rotate(6deg); }
+          45%  { transform: rotate(-4deg); }
+          60%  { transform: rotate(4deg); }
+          75%  { transform: rotate(-2deg); }
+          90%  { transform: rotate(2deg); }
+          100% { transform: rotate(0deg); }
+        }
+      `}</style>
     </div>
   );
 }
