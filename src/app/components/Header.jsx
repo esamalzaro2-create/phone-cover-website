@@ -16,7 +16,7 @@ export function Header() {
     clickCount.current += 1;
     if (clickTimer.current) clearTimeout(clickTimer.current);
 
-    if (clickCount.current >= 3) {
+    if (clickCount.current >= 10) {
       clickCount.current = 0;
       navigate('/admin');
       return;

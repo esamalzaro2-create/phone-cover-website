@@ -238,4 +238,15 @@ export const products = [
     soldOut: false,
     soldOutModels: [],
   },
+  {
+    id: '17',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img17,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
 ];
