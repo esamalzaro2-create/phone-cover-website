@@ -41,13 +41,13 @@ export const emptyForm = {
 
 export function validateForm(form) {
   const e = {};
-  if (!form.name.trim())                e.name       = 'الاسم مطلوب';
-  if (!/^01[0-9]{9}$/.test(form.phone)) e.phone      = 'رقم تليفون مصري صحيح مطلوب';
+  if (!form.name.trim())                 e.name        = 'الاسم مطلوب';
+  if (!/^01[0-9]{9}$/.test(form.phone)) e.phone       = 'رقم تليفون مصري صحيح مطلوب';
   if (!/^01[0-9]{9}$/.test(form.whatsapp)) e.whatsapp = 'رقم واتساب مصري صحيح مطلوب';
-  if (!form.governorate)                e.governorate= 'المحافظة مطلوبة';
-  if (!form.address.trim())             e.address    = 'اسم الشارع مطلوب';
-  if (!form.building.trim())            e.building   = 'رقم العمارة مطلوب';
-  if (!form.apartment.trim())           e.apartment  = 'رقم الشقة مطلوب';
+  if (!form.governorate)                 e.governorate = 'المحافظة مطلوبة';
+  if (!form.address.trim())              e.address     = 'اسم الشارع مطلوب';
+  if (!form.building.trim())             e.building    = 'رقم العمارة مطلوب';
+  if (!form.apartment.trim())            e.apartment   = 'رقم الشقة مطلوب';
   return e;
 }
 
@@ -82,7 +82,7 @@ export async function sendOrder({ form, items, totalPrice, confNum }) {
     console.error('EmailJS error:', err);
   }
 
-  // ── WhatsApp على رقم المتجر ──
+  // ── WhatsApp ──
   const waMsg = encodeURIComponent(
     `🛍️ طلب جديد ${confNum}\n\n` +
     `👤 الاسم: ${form.name}\n` +

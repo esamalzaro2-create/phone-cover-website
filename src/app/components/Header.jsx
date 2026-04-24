@@ -2,87 +2,107 @@ import { Link, useNavigate } from 'react-router';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useState, useRef } from 'react';
+import logo from '../../../assets/logo.png';
 
 export function Header() {
   const { totalItems }  = useCart();
   const navigate        = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // ── السر: اضغط على الأيقونة 3 مرات في أقل من 2 ثانية ──
   const clickCount = useRef(0);
   const clickTimer = useRef(null);
 
   const handleSecretClick = () => {
     clickCount.current += 1;
     if (clickTimer.current) clearTimeout(clickTimer.current);
-
     if (clickCount.current >= 10) {
       clickCount.current = 0;
       navigate('/admin');
       return;
     }
-
-    clickTimer.current = setTimeout(() => {
-      clickCount.current = 0;
-    }, 2000);
+    clickTimer.current = setTimeout(() => { clickCount.current = 0; }, 2000);
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <header style={{ background: '#fff', borderBottom: '2px solid #7b7fc4', position: 'sticky', top: 0, zIndex: 50 }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-gray-900">CoverCraft</Link>
+          <Link to="/">
+            <img src={logo} alt="Cover Zone" style={{ height: '85px', objectFit: 'contain' }} />
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link to="/" className="text-gray-700 hover:text-gray-900 transition-colors">Home</Link>
-            <Link to="/products" className="text-gray-700 hover:text-gray-900 transition-colors">Products</Link>
-            <Link to="/cart" className="relative">
-              <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-gray-900 transition-colors" />
+            {[
+              { to: '/', label: 'Home' },
+              { to: '/products', label: 'Products' },
+            ].map(({ to, label }) => (
+              <Link key={to} to={to}
+                style={{ color: '#2d3561', fontWeight: 600, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.target.style.color = '#7b7fc4'}
+                onMouseLeave={e => e.target.style.color = '#2d3561'}
+              >
+                {label}
+              </Link>
+            ))}
+
+            {/* Cart */}
+            <Link to="/cart" style={{ position: 'relative', textDecoration: 'none' }}>
+              <ShoppingCart style={{ color: '#2d3561', width: 24, height: 24 }} />
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span style={{
+                  position: 'absolute', top: '-8px', right: '-8px',
+                  background: '#7b7fc4', color: '#fff',
+                  fontSize: '11px', fontWeight: 700,
+                  borderRadius: '50%', width: '20px', height: '20px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
                   {totalItems}
                 </span>
               )}
             </Link>
           </nav>
 
-          {/* Right side: secret icon + mobile menu */}
+          {/* Secret icon + mobile menu */}
           <div className="flex items-center gap-3">
-            {/* ── أيقونة سرية — اضغط 3 مرات ── */}
-            <button
-              onClick={handleSecretClick}
-              className="w-8 h-8 rounded-full overflow-hidden opacity-60 hover:opacity-80 transition-opacity focus:outline-none"
-              title=""
-              aria-label=""
-            >
-              <img
-                src="https://api.dicebear.com/7.x/thumbs/svg?seed=admin&backgroundColor=b6e3f4"
-                alt=""
-                className="w-full h-full object-cover"
-              />
+            <button onClick={handleSecretClick}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', opacity: 0.4, padding: 0 }}>
+              <div style={{
+                width: '28px', height: '28px', borderRadius: '50%',
+                background: '#2d3561', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <span style={{ fontSize: '14px' }}>👤</span>
+              </div>
             </button>
-
-            {/* Mobile menu button */}
-            <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
               {mobileMenuOpen
-                ? <X className="w-6 h-6 text-gray-700" />
-                : <Menu className="w-6 h-6 text-gray-700" />
-              }
+                ? <X style={{ color: '#2d3561', width: 24, height: 24 }} />
+                : <Menu style={{ color: '#2d3561', width: 24, height: 24 }} />}
             </button>
           </div>
         </div>
 
         {/* Mobile nav */}
         {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-gray-200">
-            <div className="flex flex-col gap-4">
-              <Link to="/" className="text-gray-700 hover:text-gray-900 transition-colors" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link to="/products" className="text-gray-700 hover:text-gray-900 transition-colors" onClick={() => setMobileMenuOpen(false)}>Products</Link>
-              <Link to="/cart" className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                <ShoppingCart className="w-5 h-5" />
+          <nav style={{ padding: '16px 0', borderTop: '1px solid #e5e7eb' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {[
+                { to: '/', label: 'Home' },
+                { to: '/products', label: 'Products' },
+              ].map(({ to, label }) => (
+                <Link key={to} to={to}
+                  style={{ color: '#2d3561', fontWeight: 600, textDecoration: 'none' }}
+                  onClick={() => setMobileMenuOpen(false)}>
+                  {label}
+                </Link>
+              ))}
+              <Link to="/cart"
+                style={{ color: '#2d3561', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
+                onClick={() => setMobileMenuOpen(false)}>
+                <ShoppingCart style={{ width: 20, height: 20 }} />
                 Cart {totalItems > 0 && `(${totalItems})`}
               </Link>
             </div>
