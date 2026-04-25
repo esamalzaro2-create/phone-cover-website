@@ -1,127 +1,136 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { ref, onValue, set, get } from 'firebase/database';
+import { db } from '../firebase';
 import { products as initialProducts, iphoneModels } from '../data/products';
 
 const StockContext = createContext(null);
 
-// ── بناء الـ stock الافتراضي من products.js ──
 function buildDefaultStock() {
   const stock = {};
   initialProducts.forEach(p => {
-    stock[p.id] = {
-      hidden: false,
-      models: {},
-    };
-    iphoneModels.forEach(m => {
-      stock[p.id].models[m] = 10; // كمية افتراضية 10
-    });
+    stock[p.id] = { hidden: false, models: {} };
+    iphoneModels.forEach(m => { stock[p.id].models[m] = 10; });
   });
   return stock;
 }
 
-function loadStock() {
-  try {
-    const saved = localStorage.getItem('covercraft_stock');
-    if (saved) return JSON.parse(saved);
-  } catch {}
-  return buildDefaultStock();
-}
-
-function loadCustomProducts() {
-  try {
-    const saved = localStorage.getItem('covercraft_custom_products');
-    if (saved) return JSON.parse(saved);
-  } catch {}
-  return [];
-}
-
 export function StockProvider({ children }) {
-  const [stock, setStock]                 = useState(loadStock);
-  const [customProducts, setCustomProducts] = useState(loadCustomProducts);
+  const [stock, setStock]                   = useState({});
+  const [customProducts, setCustomProducts] = useState([]);
+  const [loading, setLoading]               = useState(true);
 
-  // حفظ تلقائي لما يتغير أي حاجة
+  // ── تحميل البيانات من Firebase ──
   useEffect(() => {
-    localStorage.setItem('covercraft_stock', JSON.stringify(stock));
-  }, [stock]);
+    const stockRef   = ref(db, 'stock');
+    const customRef  = ref(db, 'customProducts');
 
-  useEffect(() => {
-    localStorage.setItem('covercraft_custom_products', JSON.stringify(customProducts));
-  }, [customProducts]);
+    // Stock
+    const unsubStock = onValue(stockRef, snap => {
+      if (snap.exists()) {
+        setStock(snap.val());
+      } else {
+        // أول مرة — نحفظ الـ default
+        const def = buildDefaultStock();
+        set(stockRef, def);
+        setStock(def);
+      }
+      setLoading(false);
+    });
 
-  // ── تحديث كمية موديل معين ──
+    // Custom products
+    const unsubCustom = onValue(customRef, snap => {
+      if (snap.exists()) {
+        const data = snap.val();
+        setCustomProducts(Object.values(data));
+      } else {
+        setCustomProducts([]);
+      }
+    });
+
+    return () => { unsubStock(); unsubCustom(); };
+  }, []);
+
+  // ── حفظ Stock على Firebase ──
+  const saveStock = (newStock) => {
+    setStock(newStock);
+    set(ref(db, 'stock'), newStock);
+  };
+
+  // ── تحديث كمية موديل ──
   const setModelQty = (productId, model, qty) => {
     const value = Math.max(0, Number(qty));
-    setStock(prev => ({
-      ...prev,
+    const newStock = {
+      ...stock,
       [productId]: {
-        ...prev[productId],
-        models: { ...prev[productId]?.models, [model]: value },
+        ...stock[productId],
+        models: { ...stock[productId]?.models, [model]: value },
       },
-    }));
+    };
+    saveStock(newStock);
   };
 
   // ── إخفاء / إظهار منتج ──
   const toggleHidden = (productId) => {
-    setStock(prev => ({
-      ...prev,
-      [productId]: { ...prev[productId], hidden: !prev[productId]?.hidden },
-    }));
-  };
-
-  // ── حذف منتج custom ──
-  const deleteCustomProduct = (id) => {
-    setCustomProducts(prev => prev.filter(p => p.id !== id));
-    setStock(prev => {
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
+    const newStock = {
+      ...stock,
+      [productId]: { ...stock[productId], hidden: !stock[productId]?.hidden },
+    };
+    saveStock(newStock);
   };
 
   // ── إضافة منتج custom ──
   const addCustomProduct = (product) => {
-    const id = 'custom_' + Date.now();
+    const id         = 'custom_' + Date.now();
     const newProduct = { ...product, id, price: 250 };
-    setCustomProducts(prev => [...prev, newProduct]);
+
+    // حفظ المنتج
+    const newCustoms = [...customProducts, newProduct];
+    const customsObj = {};
+    newCustoms.forEach(p => { customsObj[p.id] = p; });
+    set(ref(db, 'customProducts'), customsObj);
+
     // إنشاء stock للمنتج الجديد
     const models = {};
     iphoneModels.forEach(m => { models[m] = 10; });
-    setStock(prev => ({ ...prev, [id]: { hidden: false, models } }));
+    const newStock = { ...stock, [id]: { hidden: false, models } };
+    saveStock(newStock);
   };
 
-  // ── هل الموديل sold out؟ ──
+  // ── حذف منتج custom ──
+  const deleteCustomProduct = (id) => {
+    const newCustoms = customProducts.filter(p => p.id !== id);
+    const customsObj = {};
+    newCustoms.forEach(p => { customsObj[p.id] = p; });
+    set(ref(db, 'customProducts'), Object.keys(customsObj).length ? customsObj : null);
+
+    const newStock = { ...stock };
+    delete newStock[id];
+    saveStock(newStock);
+  };
+
+  // ── Helpers ──
   const isModelSoldOut = (productId, model) => {
     return (stock[productId]?.models?.[model] ?? 0) === 0;
   };
 
-  // ── هل المنتج كله sold out؟ ──
   const isProductSoldOut = (productId) => {
     const models = stock[productId]?.models ?? {};
-    return Object.values(models).every(qty => qty === 0);
+    return Object.keys(models).length > 0 && Object.values(models).every(qty => qty === 0);
   };
 
-  // ── هل المنتج مخفي؟ ──
   const isHidden = (productId) => {
     return stock[productId]?.hidden ?? false;
   };
 
-  // ── تخفيض الكمية لما حد يطلب ──
   const decrementStock = (productId, model) => {
-    setStock(prev => {
-      const current = prev[productId]?.models?.[model] ?? 0;
-      if (current <= 0) return prev;
-      return {
-        ...prev,
-        [productId]: {
-          ...prev[productId],
-          models: { ...prev[productId].models, [model]: current - 1 },
-        },
-      };
-    });
+    const current = stock[productId]?.models?.[model] ?? 0;
+    if (current <= 0) return;
+    setModelQty(productId, model, current - 1);
   };
 
   return (
     <StockContext.Provider value={{
-      stock, customProducts,
+      stock, customProducts, loading,
       setModelQty, toggleHidden,
       addCustomProduct, deleteCustomProduct,
       isModelSoldOut, isProductSoldOut, isHidden,

@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import logo from '../../../assets/logo.png';
-
 export function Footer() {
   return (
     <footer style={{ background: '#1a1f3c', color: '#fff', marginTop: 'auto' }}>
