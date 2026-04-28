@@ -42,22 +42,26 @@ export function ProductCard({ product }) {
 
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide bg-blue-50 px-2 py-0.5 rounded-full">
+          <span className="text-xs font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full"
+            style={{ background: '#e8e9f5', color: '#2d3561' }}>
             {product.category}
           </span>
           {soldOut && <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">Sold Out</span>}
           {onSale && !soldOut && <span className="text-xs font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">Sale!</span>}
         </div>
 
-        <h3 className="text-base font-semibold text-gray-900 mt-1 mb-3 group-hover:text-blue-600 transition-colors line-clamp-1">
+        <h3 className="text-base font-semibold text-gray-900 mt-1 mb-3 group-hover:text-blue-600 transition-colors line-clamp-1"
+          style={{ '--tw-text-opacity': 1 }}
+          onMouseEnter={e => e.currentTarget.style.color = '#7b7fc4'}
+          onMouseLeave={e => e.currentTarget.style.color = '#111827'}>
           {product.name}
         </h3>
 
         <div className="flex items-center justify-between">
-          <div>
-            <span className="text-xl font-bold text-gray-900">{finalPrice} EGP</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold" style={{ color: '#2d3561' }}>{finalPrice} EGP</span>
             {onSale && (
-              <span className="text-sm text-gray-400 line-through ml-2">{basePrice} EGP</span>
+              <span className="text-sm text-gray-400 line-through">{basePrice} EGP</span>
             )}
           </div>
           {soldOut

@@ -2,20 +2,19 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
-import { emptyForm, validateForm, sendOrder, getDeliveryFee, genConfNum, CAIRO_GIZA_DELIVERY, OTHER_DELIVERY, cairoGiza } from '../utils/checkout';
+import { emptyForm, validateForm, sendOrder, genConfNum, DELIVERY_FEE } from '../utils/checkout';
 import { CheckoutForm } from '../components/CheckoutForm';
 import { Invoice } from '../components/Invoice';
 
 export function Cart() {
   const { items, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
-  const [step, setStep]       = useState('cart');
-  const [sending, setSending] = useState(false);
-  const [form, setForm]       = useState(emptyForm);
-  const [errors, setErrors]   = useState({});
+  const [step, setStep]           = useState('cart');
+  const [sending, setSending]     = useState(false);
+  const [form, setForm]           = useState(emptyForm);
+  const [errors, setErrors]       = useState({});
   const [orderData, setOrderData] = useState(null);
 
-  const deliveryFee = getDeliveryFee(form.governorate);
-  const grandTotal  = totalPrice + deliveryFee;
+  const grandTotal = totalPrice + DELIVERY_FEE;
 
   const handleChangeField = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -86,11 +85,13 @@ export function Cart() {
                     </div>
                     <div className="flex items-center justify-between mt-3">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50">
+                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50">
                           <Minus className="w-3 h-3" />
                         </button>
                         <span className="w-6 text-center font-medium text-sm">{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50">
+                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50">
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
@@ -130,6 +131,7 @@ export function Cart() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl border border-gray-200 p-6 sticky top-24">
               <h2 className="text-lg font-bold text-gray-900 mb-5">Order Summary</h2>
+
               <div className="space-y-2 mb-4">
                 {items.map((item, i) => (
                   <div key={i} className="flex justify-between text-sm">
@@ -138,25 +140,26 @@ export function Cart() {
                   </div>
                 ))}
               </div>
+
               <div className="border-t border-gray-200 pt-4 space-y-2">
                 <div className="flex justify-between text-sm text-gray-600">
-                  <span>Subtotal</span><span>{totalPrice} EGP</span>
+                  <span>Subtotal</span>
+                  <span>{totalPrice} EGP</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Delivery</span>
-                  <span>{form.governorate ? `${deliveryFee} EGP` : '—'}</span>
+                  <span>{DELIVERY_FEE} EGP</span>
                 </div>
-                {form.governorate && (
-                  <p className="text-xs text-gray-400">{cairoGiza.includes(form.governorate) ? 'القاهرة / الجيزة' : 'محافظات أخرى'}</p>
-                )}
+                <p className="text-xs text-gray-400">🚚 القاهرة والجيزة فقط</p>
                 <div className="flex justify-between font-bold text-gray-900 text-base border-t pt-3 mt-2">
                   <span>Total</span>
-                  <span>{form.governorate ? grandTotal : totalPrice} EGP</span>
+                  <span>{grandTotal} EGP</span>
                 </div>
               </div>
 
               {step === 'cart' && (
-                <button onClick={() => setStep('checkout')} className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors mt-6">
+                <button onClick={() => setStep('checkout')}
+                  className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors mt-6">
                   Proceed to Checkout
                 </button>
               )}
@@ -166,8 +169,8 @@ export function Cart() {
               </Link>
 
               <div className="mt-5 pt-5 border-t border-gray-100 text-sm text-gray-500 space-y-1">
-                <p>🚚 القاهرة / الجيزة: {CAIRO_GIZA_DELIVERY} EGP</p>
-                <p>🚚 باقي المحافظات: {OTHER_DELIVERY} EGP</p>
+                <p>🚚 التوصيل: {DELIVERY_FEE} EGP</p>
+                <p>📍 القاهرة والجيزة فقط</p>
                 <p>💵 الدفع عند الاستلام (COD)</p>
               </div>
             </div>
