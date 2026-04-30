@@ -3,20 +3,9 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { products as initialProducts } from '../data/products';
 import { useStock } from '../context/StockContext';
+import heroImg from '../../../assets/home.png';
 
 const bestSellerIds = ['3', '6', '7', '9', '13', '14'];
-
-// كفرات بتطير في الخلفية
-const floatingCovers = [
-  { id: '1',  top: '10%', left: '5%',   size: 90,  delay: '0s',    duration: '8s',  rotate: '-15deg', rotateY: '20deg'  },
-  { id: '7',  top: '15%', left: '20%',  size: 75,  delay: '1.5s',  duration: '10s', rotate: '10deg',  rotateY: '-25deg' },
-  { id: '3',  top: '5%',  left: '40%',  size: 85,  delay: '0.5s',  duration: '9s',  rotate: '-8deg',  rotateY: '30deg'  },
-  { id: '9',  top: '20%', left: '60%',  size: 70,  delay: '2s',    duration: '11s', rotate: '15deg',  rotateY: '-20deg' },
-  { id: '13', top: '8%',  left: '75%',  size: 95,  delay: '1s',    duration: '7s',  rotate: '-20deg', rotateY: '25deg'  },
-  { id: '14', top: '18%', left: '88%',  size: 65,  delay: '3s',    duration: '12s', rotate: '8deg',   rotateY: '-30deg' },
-  { id: '6',  top: '55%', left: '2%',   size: 80,  delay: '2.5s',  duration: '9s',  rotate: '12deg',  rotateY: '20deg'  },
-  { id: '2',  top: '60%', left: '82%',  size: 72,  delay: '0.8s',  duration: '10s', rotate: '-10deg', rotateY: '-22deg' },
-];
 
 export function Home() {
   const { customProducts, isHidden, isProductSoldOut } = useStock();
@@ -45,157 +34,107 @@ export function Home() {
   }, [isHovered, maxIndex]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ background: '#f5f0eb' }}>
 
       {/* ══════════════════════════════════════
-          Hero — 3D Floating Covers
+          Hero — Responsive Split Layout
       ══════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          minHeight: '520px',
-          background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4c1d95 60%, #1d4ed8 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {/* Floating covers في الخلفية */}
-        {floatingCovers.map(cover => {
-          const product = allProducts.find(p => p.id === cover.id);
-          if (!product) return null;
-          return (
-            <div
-              key={cover.id}
-              style={{
-                position: 'absolute',
-                top: cover.top,
-                left: cover.left,
-                width: `${cover.size}px`,
-                height: `${cover.size * 1.2}px`,
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)',
-                transform: `rotate(${cover.rotate}) rotateY(${cover.rotateY})`,
-                animation: `floatUp ${cover.duration} ${cover.delay} ease-in-out infinite alternate`,
-                opacity: 0.55,
-                zIndex: 1,
-              }}
-            >
-              <img src={product.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      <section className="relative overflow-hidden bg-[#f5f0eb]">
+
+        {/* Main hero content — column on mobile, row on desktop */}
+        <div className="flex flex-col md:flex-row md:items-center max-w-7xl mx-auto px-6 md:px-12 pt-10 pb-6 md:py-20 gap-10 md:gap-0">
+
+          {/* Left — النص */}
+          <div className="flex-1 z-10 text-center md:text-left">
+
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#ede8e1] border border-[#ddd5c5] rounded-full px-4 py-1.5 text-[11px] font-bold text-[#7a6a55] tracking-widest uppercase mb-6">
+              ✦ Premium Phone Covers
             </div>
-          );
-        })}
 
-        {/* Gradient overlay عشان النص يبان */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 2,
-          background: 'radial-gradient(ellipse at center, rgba(30,27,75,0.5) 0%, rgba(30,27,75,0.75) 100%)',
-        }} />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-5" style={{ fontFamily: 'Georgia, serif', color: '#1a1a1a' }}>
+              Protect Your Phone
+              <br />
+              <span style={{ color: '#c9a96e' }}>in Style</span>
+            </h1>
 
-        {/* Hero content */}
-        <div style={{ position: 'relative', zIndex: 3, textAlign: 'center', padding: '80px 20px', maxWidth: '700px' }}>
-          <div style={{
-            display: 'inline-block',
-            background: 'rgba(255,255,255,0.12)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: '50px',
-            padding: '6px 18px',
-            fontSize: '13px',
-            color: '#c4b5fd',
-            fontWeight: 600,
-            marginBottom: '20px',
-            letterSpacing: '1px',
-          }}>
-            ✨ Premium Phone Covers
+            <p className="text-base md:text-lg text-[#7a6a55] leading-relaxed mb-8 max-w-md mx-auto md:mx-0">
+              Discover our collection of premium phone covers
+              designed to match your unique style
+            </p>
+
+            <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+              <Link to="/products"
+                className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white px-7 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg hover:-translate-y-0.5 transition-transform">
+                Shop Now <ArrowRight size={16} />
+              </Link>
+              <Link to="/products"
+                className="inline-flex items-center gap-2 border border-[#1a1a1a] text-[#1a1a1a] px-7 py-3.5 rounded-full font-semibold text-sm md:text-base hover:bg-black/5 transition-colors">
+                View All Products
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="flex gap-6 md:gap-8 justify-center md:justify-start mt-8 pt-6 border-t border-[#ddd5c5] flex-wrap">
+              {[
+                { num: '250+', label: 'Happy Customers' },
+                { num: '100%', label: 'Quality' },
+              ].map(({ num, label }) => (
+                <div key={label} className="text-center md:text-left">
+                  <p className="text-xl md:text-2xl font-black text-[#1a1a1a] m-0">{num}</p>
+                  <p className="text-xs text-[#9a8878] m-0 tracking-wide">{label}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <h1 style={{
-            fontSize: 'clamp(36px, 6vw, 68px)',
-            fontWeight: 900,
-            color: '#ffffff',
-            lineHeight: 1.1,
-            marginBottom: '20px',
-            textShadow: '0 4px 30px rgba(0,0,0,0.4)',
-          }}>
-            Protect Your Phone
-            <br />
-            <span style={{ color: '#a5b4fc' }}>in Style</span>
-          </h1>
-
-          <p style={{
-            fontSize: '18px',
-            color: '#c4b5fd',
-            marginBottom: '36px',
-            lineHeight: 1.7,
-          }}>
-            Discover our collection of premium phone covers
-            <br />designed to match your unique style
-          </p>
-
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/products" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              background: 'white', color: '#4338ca',
-              padding: '14px 28px', borderRadius: '50px',
-              fontWeight: 700, fontSize: '16px',
-              textDecoration: 'none',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
-              transition: 'transform 0.2s',
-            }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              Shop Now <ArrowRight size={18} />
-            </Link>
-            <Link to="/products" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              background: 'rgba(255,255,255,0.15)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255,255,255,0.3)',
-              color: 'white',
-              padding: '14px 28px', borderRadius: '50px',
-              fontWeight: 600, fontSize: '16px',
-              textDecoration: 'none',
-            }}>
-              View All
-            </Link>
+          {/* Right — صورة + badge (مخفية على موبايل صغير، بتظهر تحت النص) */}
+          <div className="flex-1 relative flex justify-center items-center min-h-[280px] md:min-h-[440px]">
+            {/* دايرة ديكور */}
+            <div className="absolute w-56 h-56 md:w-96 md:h-96 rounded-full bg-[#e5ddd0]" />
+            <img
+              src={heroImg}
+              alt="Cover Station"
+              className="relative z-10 w-48 md:w-72 lg:w-80 object-contain drop-shadow-2xl"
+            />
+            {/* Float badge — بتظهر بس على desktop */}
+            <div className="hidden md:block absolute bottom-8 right-4 z-20 bg-[#1a1a1a] rounded-2xl p-4 shadow-xl text-center min-w-[120px]">
+              <div className="text-2xl mb-1">🛡️</div>
+              <p className="font-black text-xs text-[#ac9981] m-0">Ultimate</p>
+              <p className="font-black text-xs text-[#ac9981] m-0">Protection</p>
+              <p className="text-[10px] text-gray-400 mt-1 leading-snug">Stylish. Durable.<br />Reliable.</p>
+            </div>
           </div>
+        </div>
 
-          {/* Stats */}
-          <div style={{
-            display: 'flex', gap: '32px', justifyContent: 'center',
-            marginTop: '48px', flexWrap: 'wrap',
-          }}>
+        {/* Features bar — 2x2 grid on mobile, 4 cols on desktop */}
+        <div className="bg-[#1a1a1a] border-t border-[#e8e0d8]">
+          <div className="max-w-7xl mx-auto px-4 py-5 grid grid-cols-2 md:grid-cols-4 gap-px bg-[#1a1a1a]">
             {[
-              { num: '17+', label: 'Designs' },
-              { num: '250', label: 'EGP' },
-              { num: '100%', label: 'Quality' },
-            ].map(({ num, label }) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: '24px', fontWeight: 800, color: '#fff', margin: 0 }}>{num}</p>
-                <p style={{ fontSize: '12px', color: '#a5b4fc', margin: 0, letterSpacing: '1px' }}>{label}</p>
+              { icon: '🛡️', title: 'Premium Quality',  desc: 'Top-notch materials for ultimate protection.' },
+              { icon: '📱', title: 'Perfect Fit',       desc: 'Precision design for every device.' },
+              { icon: '🎨', title: 'Trendy Designs',    desc: 'Stylish covers that match your vibe.' },
+              { icon: '🚚', title: 'Fast Delivery',     desc: 'Quick and reliable shipping.' },
+            ].map(({ icon, title, desc }) => (
+              <div key={title} className="flex items-center gap-3 bg-[#f5f0eb] px-4 py-4">
+                <span className="w-9 h-9 rounded-full bg-[#f5f0eb] flex items-center justify-center text-lg shrink-0">
+                  {icon}
+                </span>
+                <div>
+                  <p className="font-bold text-xs text-[#1a1a1a] m-0">{title}</p>
+                  <p className="text-[10px] text-[#9a8878] mt-0.5 leading-snug m-0">{desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* CSS Animations */}
-        <style>{`
-          @keyframes floatUp {
-            0%   { transform: rotate(var(--r, -15deg)) rotateY(var(--ry, 20deg)) translateY(0px);   }
-            100% { transform: rotate(var(--r, -15deg)) rotateY(var(--ry, 20deg)) translateY(-18px); }
-          }
-        `}</style>
       </section>
 
       {/* ── Best Sellers ── */}
-      <section className="py-16 px-4 bg-white">
+      <section className="py-16 px-4 ">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">🔥 Best Sellers</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#1a1a1a]">🔥 Best Sellers</h2>
             <p className="text-gray-500 text-lg">الأكثر مبيعاً عند عملاءنا</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
@@ -210,14 +149,14 @@ export function Home() {
                   {soldOut && <span className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">Sold Out</span>}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-white font-bold text-sm md:text-base leading-tight mb-1">{product.name}</p>
-                    <p className="text-blue-300 font-bold text-sm">250 EGP</p>
+                    <p className="text-[#9a8878] font-bold text-sm">250 EGP</p>
                   </div>
                 </Link>
               );
             })}
           </div>
           <div className="text-center mt-8">
-            <Link to="/products" className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            <Link to="/products" className="inline-flex items-center gap-2 bg-[#1a1a1a] text-[#bbad9b] px-6 py-3 rounded-lg font-semibold hover:bg-[#333333] transition-colors">
               View All Products <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -225,10 +164,10 @@ export function Home() {
       </section>
 
       {/* ── All Products Slider ── */}
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-16 px-4 ">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">Our Collection</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#1a1a1a]">Our Collection</h2>
             <p className="text-gray-500 text-lg">تصفح كل المنتجات</p>
           </div>
 
@@ -253,11 +192,6 @@ export function Home() {
                             </div>
                           )}
                         </div>
-                        <div className="p-3">
-                          <p className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full inline-block mb-1">{product.category}</p>
-                          <p className="font-semibold text-gray-900 text-sm line-clamp-1 group-hover:text-blue-600 transition-colors">{product.name}</p>
-                          <p className="text-blue-600 font-bold text-sm mt-1">250 EGP</p>
-                        </div>
                       </Link>
                     </div>
                   );
@@ -278,13 +212,13 @@ export function Home() {
           <div className="flex justify-center gap-1.5 mt-6">
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button key={i} onClick={() => setCurrent(i)}
-                className={`h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-blue-600 w-5' : 'bg-gray-300 w-2'}`} />
+                className={`h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-[#1a1a1a] w-5' : 'bg-gray-300 w-2'}`} />
             ))}
           </div>
 
           <div className="text-center mt-8">
             <Link to="/products"
-              className="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
+              className="inline-flex items-center gap-2 border-2 border-[#1a1a1a] text-[#c9a96e] px-6 py-3 rounded-lg font-semibold hover:bg-[#1a1a1a] hover:text-[#a09280] transition-colors">
               View All Products <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -292,12 +226,12 @@ export function Home() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-gray-900 text-white py-16 px-4">
+      <section className="bg-[#1a1a1a] text-[#c9a96e] py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Find Your Perfect Match</h2>
-          <p className="text-gray-300 text-lg mb-8">Browse our extensive collection and find the perfect case for your device</p>
+          <p className="text-[#c9a96e] text-lg mb-8">Browse our extensive collection and find the perfect case for your device</p>
           <Link to="/products"
-            className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            className="inline-flex items-center gap-2 bg-[#c9a96e] text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-[#80693f] transition-colors">
             Explore Collection <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
