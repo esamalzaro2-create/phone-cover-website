@@ -3,12 +3,12 @@ import { RefreshCw, CheckCircle, XCircle, MessageCircle, Clock, Camera, Package,
 
 export function Returns() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
 
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16 px-4">
+      <div className="bg-gradient-to-br from-[#7a6a55] to-[#c9a96e] text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 bg-[#7a6a55] rounded-2xl flex items-center justify-center mx-auto mb-6">
             <RefreshCw className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Returns & Exchange</h1>
@@ -130,7 +130,7 @@ export function Returns() {
         </div>
 
         {/* CTA */}
-        <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-white text-center">
+        <div className="bg-gradient-to-br from-[#7a6a55] to-[#c9a96e] rounded-2xl p-8 text-white text-center">
           <h2 className="text-2xl font-bold mb-2">عندك مشكلة في طلبك؟</h2>
           <p className="text-blue-100 mb-6">تواصل معانا على الواتساب وهنحلها في أسرع وقت</p>
           <div className="flex gap-4 justify-center flex-wrap">
@@ -144,7 +144,7 @@ export function Returns() {
             </a>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors"
+              className="inline-flex items-center gap-2 bg-[#584832] text-[#c9a96e] px-6 py-3 rounded-xl font-bold hover:bg-[#e7e2d8] transition-colors duration-300"
             >
               Contact Us
             </Link>

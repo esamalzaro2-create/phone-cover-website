@@ -3,12 +3,12 @@ import { Truck, Clock, MapPin, Package, RefreshCw, Phone, MessageCircle, CheckCi
 
 export function ShippingInfo() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
 
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16 px-4">
+      <div className="bg-gradient-to-br from-[#7a6a55] to-[#c9a96e] text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 bg-[#584832] rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Truck className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Shipping Info</h1>
@@ -20,13 +20,13 @@ export function ShippingInfo() {
 
         {/* Delivery fees */}
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-          <div className="bg-blue-50 border-b border-blue-100 px-6 py-4 flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-blue-600" />
+          <div className="bg-[#7a6a55] border-b border-blue-100 px-6 py-4 flex items-center gap-3">
+            <MapPin className="w-5 h-5 text-[#c9a96e]" />
             <h2 className="text-lg font-bold text-gray-900">رسوم التوصيل</h2>
           </div>
           <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
-              <p className="text-3xl font-bold text-blue-600 mb-2">70 EGP</p>
+            <div className="bg-[#e7e2d8] rounded-xl p-5 text-center border border-[#ac8e58]">
+              <p className="text-3xl font-bold text-[#c9a96e] mb-2">70 EGP</p>
               <p className="font-semibold text-gray-900 mb-1">القاهرة والجيزة</p>
               <p className="text-sm text-gray-500">Cairo & Giza</p>
             </div>
@@ -154,7 +154,7 @@ export function ShippingInfo() {
         </div>
 
         {/* Contact CTA */}
-        <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-white text-center">
+        <div className="bg-gradient-to-br from-[#7a6a55] to-[#c9a96e] rounded-2xl p-8 text-white text-center">
           <h2 className="text-2xl font-bold mb-2">عندك سؤال؟</h2>
           <p className="text-blue-100 mb-6">تواصل معانا وهنرد في أقرب وقت</p>
           <div className="flex gap-4 justify-center flex-wrap">
@@ -168,7 +168,7 @@ export function ShippingInfo() {
             </a>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors"
+              className="inline-flex items-center gap-2 bg-[#584832] text-[#c9a96e] px-6 py-3 rounded-xl font-bold hover:bg-[#e7e2d8] transition-colors"
             >
               <Phone className="w-5 h-5" /> Contact Us
             </Link>

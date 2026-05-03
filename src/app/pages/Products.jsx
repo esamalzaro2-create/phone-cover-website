@@ -4,7 +4,7 @@ import { products as initialProducts, categories } from '../data/products';
 import { useStock } from '../context/StockContext';
 import { Filter } from 'lucide-react';
 
-const brand = { main: '#2d3561', purple: '#7b7fc4', light: '#e8e9f5' };
+const brand = { main: '#c9a96e', purple: '#7a6a55', light: '#7a6a55' };
 
 function ProductCard({ product }) {
   const { isProductSoldOut, isHidden, getFinalPrice, hasSale, stock, loading } = useStock();
@@ -19,7 +19,7 @@ function ProductCard({ product }) {
 
   return (
     <Link to={`/product/${product.id}`}
-      className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative">
+      className="group bg-[#1a1a1a] rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative">
 
       {/* Sale badge */}
       {onSale && !soldOut && (
@@ -36,7 +36,7 @@ function ProductCard({ product }) {
         </div>
       )}
 
-      <div className="aspect-square overflow-hidden bg-gray-100">
+      <div className="aspect-square overflow-hidden bg-[#1a1a1a]">
         <img src={product.image} alt={product.name}
           className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${soldOut ? 'grayscale' : ''}`} />
       </div>
@@ -51,7 +51,7 @@ function ProductCard({ product }) {
           {onSale && !soldOut && <span className="text-xs font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">Sale!</span>}
         </div>
 
-        <h3 className="text-base font-semibold text-gray-900 mt-1 mb-3 line-clamp-1 group-hover:text-purple-600 transition-colors">
+        <h3 className="text-base font-semibold text-[#c9a96e] mt-1 mb-3 line-clamp-1 group-hover:text-purple-600 transition-colors">
           {product.name}
         </h3>
 
@@ -62,7 +62,7 @@ function ProductCard({ product }) {
             ) : (
               <>
                 <span className="text-xl font-bold" style={{ color: brand.main }}>{finalPrice} EGP</span>
-                {onSale && <span className="text-sm text-gray-400 line-through">{basePrice} EGP</span>}
+                {onSale && <span className="text-sm text-[#7a6a55] line-through">{basePrice} EGP</span>}
               </>
             )}
           </div>
@@ -88,7 +88,7 @@ export function Products() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">All Products</h1>

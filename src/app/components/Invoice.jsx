@@ -3,12 +3,12 @@ import { Check } from 'lucide-react';
 
 export function Invoice({ orderData }) {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-[#f5f0eb] flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-2xl border border-gray-200 w-full max-w-lg overflow-hidden shadow-lg">
         {/* Header */}
-        <div className="bg-blue-600 text-white text-center py-8 px-6">
+        <div className="bg-[#c9a96e] text-white text-center py-8 px-6">
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="w-8 h-8 text-blue-600" />
+            <Check className="w-8 h-8 text-[#c9a96e]" />
           </div>
           <p className="text-blue-100 text-sm mb-1">Confirmation {orderData.confNum}</p>
           <h1 className="text-2xl font-bold">Thank you, {orderData.name}!</h1>
@@ -70,7 +70,7 @@ export function Invoice({ orderData }) {
 
           <Link
             to="/products"
-            className="mt-8 block w-full text-center bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+            className="mt-8 block w-full text-center bg-[#584832] text-[#c9a96e] py-3 rounded-xl font-semibold hover:bg-[#e7e2d8] transition-colors"
           >
             Continue Shopping
           </Link>

@@ -43,12 +43,12 @@ export function Cart() {
   // ── Empty ──
   if (items.length === 0 && step === 'cart') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f5f0eb] flex items-center justify-center">
         <div className="text-center">
           <ShoppingBag className="w-24 h-24 text-gray-300 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Cart is Empty</h2>
           <p className="text-gray-600 mb-6">Start shopping and add items to your cart</p>
-          <Link to="/products" className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+          <Link to="/products" className="inline-flex items-center gap-2 bg-[#c9a96e] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#e7e2d8] transition-colors">
             Browse Products <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
@@ -57,7 +57,7 @@ export function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           {step === 'cart' ? 'Shopping Cart' : 'Checkout'}
@@ -159,12 +159,12 @@ export function Cart() {
 
               {step === 'cart' && (
                 <button onClick={() => setStep('checkout')}
-                  className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors mt-6">
+                  className="w-full bg-[#c9a96e] text-white py-3 rounded-xl font-bold hover:bg-[#887854] transition-colors mt-6">
                   Proceed to Checkout
                 </button>
               )}
 
-              <Link to="/products" className="block w-full text-center text-blue-600 font-medium py-2 mt-3 hover:underline">
+              <Link to="/products" className="block w-full text-center text-[#c9a96e] font-medium py-2 mt-3 hover:underline">
                 Continue Shopping
               </Link>
 

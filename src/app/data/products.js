@@ -35,6 +35,19 @@ import img14 from '../../../assets/14.jpeg';
 import img15 from '../../../assets/15.jpeg';
 import img16 from '../../../assets/16.jpeg';
 import img17 from '../../../assets/17.jpeg';
+import img18 from '../../../assets/18.jpeg';
+import img19 from '../../../assets/19.jpeg';
+import img20 from '../../../assets/20.jpeg';
+import img21 from '../../../assets/21.jpeg';
+import img22 from '../../../assets/22.jpeg';
+import img23 from '../../../assets/23.jpeg';
+import img24 from '../../../assets/24.jpeg';
+import img25 from '../../../assets/25.jpeg';
+import img26 from '../../../assets/26.jpeg';
+import img27 from '../../../assets/27.jpeg';
+import img28 from '../../../assets/28.jpeg';
+import img29 from '../../../assets/29.jpeg';
+import img30 from '../../../assets/30.jpeg';
 
 
 export const categories = ['All', 'Anime', 'TV Show', 'Cartoon', 'Funny', 'Islam'];
@@ -239,10 +252,142 @@ export const products = [
     soldOutModels: [],
   },
   {
-    id: '17',
+    id: '18',
     name: 'House of Stark Case',
     price: 250,
-    image: img17,
+    image: img18,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '19',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img19,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '20',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img20,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '21',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img21,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '22',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img22,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '23',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img23,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '24',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img24,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '25',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img25,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '26',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img26,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '27',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img27,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '28',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img28,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '29',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img29,
+    category: 'TV Show',
+    description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
+    material: 'Hard Polycarbonate',
+    soldOut: false,
+    soldOutModels: [],
+  },
+  {
+    id: '30',
+    name: 'House of Stark Case',
+    price: 250,
+    image: img30,
     category: 'TV Show',
     description: 'Game of Thrones House Stark — Winter is Coming. For GoT fans.',
     material: 'Hard Polycarbonate',

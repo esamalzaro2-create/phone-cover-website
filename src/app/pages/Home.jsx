@@ -156,9 +156,6 @@ export function Home() {
             })}
           </div>
           <div className="text-center mt-8">
-            <Link to="/products" className="inline-flex items-center gap-2 bg-[#1a1a1a] text-[#bbad9b] px-6 py-3 rounded-lg font-semibold hover:bg-[#333333] transition-colors">
-              View All Products <ArrowRight className="w-5 h-5" />
-            </Link>
           </div>
         </div>
       </section>

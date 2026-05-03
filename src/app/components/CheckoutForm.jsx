@@ -1,7 +1,7 @@
 import { governorates, DELIVERY_FEE, inp } from '../utils/checkout';
 import { Loader } from 'lucide-react';
 
-const brand = { main: '#2d3561', purple: '#7b7fc4', light: '#e8e9f5' };
+const brand = { main: '#c9a96e', purple: '#7a6a55', light: '#fff' };
 
 export function CheckoutForm({ form, errors, sending, totalPrice, onChangeField, onConfirm, onBack }) {
   const grandTotal = totalPrice + DELIVERY_FEE;

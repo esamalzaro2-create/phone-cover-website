@@ -88,15 +88,15 @@ const faqs = [
 function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`border rounded-xl overflow-hidden transition-all duration-200 ${open ? 'border-blue-200 bg-blue-50/30' : 'border-gray-200 bg-white'}`}>
+    <div className={`border rounded-xl overflow-hidden transition-all duration-200 ${open ? 'border-blue-200 bg-[#c9a96e]' : 'border-gray-200 bg-white'}`}>
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between p-5 text-left"
       >
-        <span className={`font-semibold text-base transition-colors ${open ? 'text-blue-700' : 'text-gray-900'}`}>
+        <span className={`font-semibold text-base transition-colors ${open ? 'text-white' : 'text-gray-900'}`}>
           {question}
         </span>
-        <ChevronDown className={`w-5 h-5 flex-shrink-0 ml-3 transition-transform duration-200 ${open ? 'rotate-180 text-blue-600' : 'text-gray-400'}`} />
+        <ChevronDown className={`w-5 h-5 flex-shrink-0 ml-3 transition-transform duration-200 ${open ? 'rotate-180 text-[#7a6a55]' : 'text-gray-400'}`} />
       </button>
       {open && (
         <div className="px-5 pb-5">
@@ -115,14 +115,14 @@ export function FAQ() {
     : faqs;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
 
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16 px-4">
+      <div className="bg-gradient-to-br from-[#7a6a55] to-[#c9a96e] text-white py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <div className="text-5xl mb-4">❓</div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h1>
-          <p className="text-blue-100 text-lg">إجابات على أكتر الأسئلة اللي بتتسألنا</p>
+          <p className="text-[#d6ccb8] text-lg">إجابات على أكتر الأسئلة اللي بتتسألنا</p>
         </div>
       </div>
 
@@ -133,7 +133,7 @@ export function FAQ() {
           <button
             onClick={() => setActiveCategory(null)}
             className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-              activeCategory === null ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-700 hover:border-blue-300'
+              activeCategory === null ? 'bg-[#c9a96e] text-white' : 'bg-white border border-gray-200 text-gray-700 hover:border-[#7a6a55]'
             }`}
           >
             الكل
@@ -143,7 +143,7 @@ export function FAQ() {
               key={f.category}
               onClick={() => setActiveCategory(activeCategory === f.category ? null : f.category)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                activeCategory === f.category ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-700 hover:border-blue-300'
+                activeCategory === f.category ? 'bg-[#c9a96e] text-white' : 'bg-white border border-gray-200 text-gray-700 hover:border-[#7a6a55]'
               }`}
             >
               {f.category}
@@ -182,7 +182,7 @@ export function FAQ() {
             </a>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 bg-[#584832] text-[#c9a96e] px-6 py-3 rounded-xl font-bold hover:bg-[#e7e2d8] transition-colors"
             >
               <Mail className="w-5 h-5" /> Contact Us
             </Link>

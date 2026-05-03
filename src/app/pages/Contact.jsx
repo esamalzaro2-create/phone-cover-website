@@ -10,10 +10,10 @@ const WHATSAPP_NUMBER     = '201030733667';
 const CONTACT_EMAIL       = 'coverzone109@gmail.com';
 
 const brand = {
-  dark:   '#1a1f3c',
-  main:   '#2d3561',
+  dark:   '#7a6a55',
+  main:   '#c9a96e',
   purple: '#7b7fc4',
-  light:  '#e8e9f5',
+  light:  '#c9a96e',
 };
 
 const inp = (hasErr) => ({
@@ -67,9 +67,9 @@ export function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
       {/* Hero */}
-      <div style={{ background: `linear-gradient(135deg, ${brand.dark}, ${brand.main})`, color: '#fff', padding: '64px 16px', textAlign: 'center' }}>
+      <div style={{ background: `linear-gradient(135deg, ${brand.dark}, ${brand.main})`, color: '#f5f0eb', padding: '64px 16px', textAlign: 'center' }}>
         <div className="max-w-4xl mx-auto">
           <h1 style={{ fontSize: 'clamp(32px,5vw,48px)', fontWeight: 800, marginBottom: '12px' }}>Contact Us</h1>
           <p style={{ color: '#c4c6e8', fontSize: '18px' }}>في أي مشكلة أو استفسار — احنا هنا نساعدك</p>
@@ -90,12 +90,12 @@ export function Contact() {
                   <MessageCircle style={{ color: '#16a34a', width: 24, height: 24 }} />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">WhatsApp</p>
-                  <p className="text-sm text-gray-500">أسرع طريقة للتواصل</p>
+                  <p className="font-bold text-[#c9a96e]">WhatsApp</p>
+                  <p className="text-sm text-[#7a6a55]">أسرع طريقة للتواصل</p>
                 </div>
               </div>
               <p style={{ color: '#16a34a', fontWeight: 600, fontSize: '14px' }}>01030733667</p>
-              <p className="text-xs text-gray-400 mt-1">اضغط للتواصل مباشرة ←</p>
+              <p className="text-xs text-[#7a6a55] mt-1">اضغط للتواصل مباشرة ←</p>
             </button>
 
             {/* Email */}
@@ -105,8 +105,8 @@ export function Contact() {
                   <Mail style={{ color: brand.purple, width: 24, height: 24 }} />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">Email</p>
-                  <p className="text-sm text-gray-500">للشكاوى والاستفسارات</p>
+                  <p className="font-bold text-[#c9a96e]">Email</p>
+                  <p className="text-sm text-[#7a6a55]">للشكاوى والاستفسارات</p>
                 </div>
               </div>
               <p style={{ color: brand.purple, fontWeight: 600, fontSize: '13px', wordBreak: 'break-all' }}>{CONTACT_EMAIL}</p>
@@ -119,12 +119,12 @@ export function Contact() {
                   <Clock style={{ color: brand.purple, width: 24, height: 24 }} />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">Response Time</p>
-                  <p className="text-sm text-gray-500">وقت الرد</p>
+                  <p className="font-bold text-[#c9a96e]">Response Time</p>
+                  <p className="text-sm text-[#7a6a55]">وقت الرد</p>
                 </div>
               </div>
-              <p className="text-gray-700 text-sm">واتساب: خلال ساعة</p>
-              <p className="text-gray-700 text-sm">إيميل: خلال 24 ساعة</p>
+              <p className="text-[#7a6a55]">واتساب: خلال ساعة</p>
+              <p className="text-[#7a6a55]">إيميل: خلال 24 ساعة</p>
             </div>
 
             {/* Delivery */}
@@ -134,12 +134,11 @@ export function Contact() {
                   <MapPin style={{ color: '#ea580c', width: 24, height: 24 }} />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">Delivery</p>
-                  <p className="text-sm text-gray-500">مناطق التوصيل</p>
+                  <p className="font-bold text-[#c9a96e]">Delivery</p>
+                  <p className="text-sm text-[#7a6a55]">مناطق التوصيل</p>
                 </div>
               </div>
-              <p className="text-gray-700 text-sm">🚚 القاهرة / الجيزة: 70 EGP</p>
-              <p className="text-gray-700 text-sm">🚚 باقي المحافظات: 105 EGP</p>
+              <p className="text-[#7a6a55]">🚚 القاهرة / الجيزة: 70 EGP</p>
             </div>
           </div>
 
@@ -151,7 +150,7 @@ export function Contact() {
                   <CheckCircle style={{ color: '#16a34a', width: 40, height: 40 }} />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">تم الإرسال!</h2>
-                <p className="text-gray-500 mb-8">وصلتنا رسالتك وهنرد عليك في أقرب وقت.</p>
+                <p className="text-[#7a6a55] mb-8">وصلتنا رسالتك وهنرد عليك في أقرب وقت.</p>
                 <div className="flex gap-3 flex-wrap justify-center">
                   <button onClick={() => { setSent(false); setForm({ name: '', email: '', orderNumber: '', subject: '', message: '' }); }}
                     style={{ padding: '12px 24px', border: `1px solid ${brand.purple}`, color: brand.purple, borderRadius: 12, fontWeight: 600, cursor: 'pointer', background: 'transparent' }}>

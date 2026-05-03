@@ -56,7 +56,6 @@ export function Header() {
             {[
               { to: '/',         label: 'Home' },
               { to: '/products', label: 'Products' },
-              { to: '/products', label: 'Categories' },
               { to: '/contact',  label: 'Contact' },
             ].map(({ to, label }) => (
               <Link key={label} to={to}
@@ -115,8 +114,6 @@ export function Header() {
               {[
                 { to: '/',         label: 'Home' },
                 { to: '/products', label: 'Products' },
-                { to: '/products', label: 'Categories' },
-                { to: '/about',    label: 'About Us' },
                 { to: '/contact',  label: 'Contact' },
               ].map(({ to, label }) => (
                 <Link key={label} to={to}

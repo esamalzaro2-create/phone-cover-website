@@ -10,7 +10,7 @@ import { CheckoutForm } from '../components/CheckoutForm';
 import { Invoice } from '../components/Invoice';
 
 const WHATSAPP_NUMBER = '201030733667';
-const brand = { main: '#2d3561', purple: '#7b7fc4', light: '#e8e9f5', dark: '#1a1f3c' };
+const brand = { main: '#c9a96e', purple: '#7b7fc4', light: '#7a6a55', dark: '#1a1f3c' };
 
 export function ProductDetail() {
   const { id } = useParams();
@@ -103,7 +103,7 @@ export function ProductDetail() {
 
   if (step === 'checkout') {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-[#f5f0eb]">
         <div className="max-w-2xl mx-auto px-4 py-8">
           <button onClick={() => setStep('detail')}
             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors">
@@ -111,8 +111,8 @@ export function ProductDetail() {
           </button>
 
           {/* Product recap */}
-          <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4 flex gap-4 items-center">
-            <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+          <div className="bg-[#1a1a1a] rounded-xl border border-gray-200 p-4 mb-4 flex gap-4 items-center">
+            <div className="w-16 h-16 rounded-lg overflow-hidden bg-[#7a6a55] flex-shrink-0">
               <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             </div>
             <div className="flex-1">
@@ -140,7 +140,7 @@ export function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f0eb]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link to="/products"
           className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors">
@@ -305,7 +305,7 @@ export function ProductDetail() {
                 return (
                   <Link key={related.id} to={`/product/${related.id}`}
                     onClick={() => { setSelectedModel(''); setStep('detail'); window.scrollTo(0, 0); }}
-                    className="flex-shrink-0 w-56 bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+                    className="flex-shrink-0 w-56 bg-[#1a1a1a] rounded-xl border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
                     <div className="w-full h-48 bg-gray-100 overflow-hidden relative">
                       <img src={related.image} alt={related.name}
                         className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${isProductSoldOut(related.id) ? 'grayscale' : ''}`} />
@@ -317,10 +317,10 @@ export function ProductDetail() {
                       )}
                     </div>
                     <div className="p-4">
-                      <p className="font-semibold text-gray-900 text-sm mb-1 line-clamp-1 group-hover:text-blue-600 transition-colors">{related.name}</p>
+                      <p className="font-semibold text-[#9a8878] text-sm mb-1 line-clamp-1 group-hover:text-[#c9a96e] transition-colors">{related.name}</p>
                       <div className="flex items-center gap-2">
                         <p className="font-bold text-sm" style={{ color: brand.main }}>{rFinalPrice} EGP</p>
-                        {rOnSale && <p className="text-xs text-gray-400 line-through">{rBasePrice} EGP</p>}
+                        {rOnSale && <p className="text-xs text-[#c9a96e] line-through">{rBasePrice} EGP</p>}
                       </div>
                     </div>
                   </Link>
